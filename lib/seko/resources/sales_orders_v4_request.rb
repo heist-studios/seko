@@ -5,7 +5,7 @@ module Seko
 
       # OPTIONAL ATTRIBUTES:
 
-      attribute :billing_details ,   BillingDetails
+      attribute :billing_details,    BillingDetails
       attribute :delivery_details,   DeliveryDetails
       attribute :forwarding_agent,   ForwardingAgent
       attribute :list,               Hash[String => [SalesOrderLineItemV4]]
