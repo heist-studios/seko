@@ -30,6 +30,16 @@ require 'seko/resources/sales_order_header'
 require 'seko/resources/sales_order_line_item_v4'
 require 'seko/resources/ship_to_company'
 
+require 'seko/resources/image'
+require 'seko/resources/ship_to_company_mapping'
+require 'seko/resources/product_category'
+require 'seko/resources/product_identifier'
+require 'seko/resources/product_master_v4'
+require 'seko/resources/supplier_mapping'
+
+require 'seko/resources/product_master_parameters_list_v4'
+
+require 'seko/resources/product_master_v4_request'
 require 'seko/resources/sales_orders_v4_request'
 
 GEM_ROOT = File.dirname(File.dirname(__FILE__))

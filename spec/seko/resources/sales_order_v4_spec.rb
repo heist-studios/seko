@@ -82,7 +82,7 @@ module Seko
               'SubTotal'                    => 5.0,
               'TaxTotal'                    => 3.0,
               'UltimateDestination'         => 'TestUltimateDestination',
-              'SalesInvoiceNumber'          => 'TestSalesInvoiceNumber',
+              'SalesInvoiceNumber'          => 'TestSalesInvoiceNumber'
             }.to_json
           )
         end

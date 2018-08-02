@@ -22,7 +22,7 @@ module Seko
 
       def transform_simple_key(key)
         key.to_s.split('_').map do |k|
-          if %w(asn dc ean guid nif vat).include?(k)
+          if %w[asn dc ean guid nif vat qc uom hts vat moq].include?(k)
             k.upcase
           else
             k.capitalize
