@@ -2,28 +2,32 @@ module Seko
   module Resources
     class Base
       def to_json_body
-        attributes.transform_keys do |key|
-          case key
-          when :asn_number
-            'ASNNumber'
-          when :shipping_vat
-            'ShippingVAT'
-          when :shipping_ex_vat
-            'ShippingExVAT'
-          when :secondary_vat
-            'SecondaryVAT'
-          when :do_not_push_to_dc
-            'DoNotPushToDC'
-          when :nif_number
-            'NIFNumber'
-          when :dc_code
-            'DCCode'
-          when :guid, :ean, :vat
-            key.upcase
+        transform_keys(attributes).to_json
+      end
+
+      private
+
+      def transform_keys(attrs)
+        attrs.inject({}) do |acc, (key, val)|
+          if val.respond_to?(:attributes)
+            acc[transform_simple_key(key)] = transform_keys(val.attributes)
+          elsif val.is_a?(Array)
+            acc['List'] = { 'SalesOrderLineItem' => val.map { |el| transform_keys(el.attributes) } }
           else
-            key.to_s.split('_').map(&:capitalize).join
+            acc[transform_simple_key(key)] = val
           end
-        end.to_json
+          acc
+        end
+      end
+
+      def transform_simple_key(key)
+        key.to_s.split('_').map do |k|
+          if %w(asn dc ean guid nif vat).include?(k)
+            k.upcase
+          else
+            k.capitalize
+          end
+        end.join
       end
     end
   end

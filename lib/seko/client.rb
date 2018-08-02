@@ -14,13 +14,15 @@ module Seko
     def load_sales_order(order)
       body = order.to_json_body
 
-      HTTParty.post(API_URL + LOAD_SALES_ORDER_PATH,
+      HTTParty.post(
+        API_URL + LOAD_SALES_ORDER_PATH,
         headers: {
           'Content-Type' => 'application/json',
           'Accept'       => 'application/json'
         },
         query:   { api_key: api_key },
-        body:    body)
+        body:    body
+      )
     end
 
     private
