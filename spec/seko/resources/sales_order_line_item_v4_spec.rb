@@ -30,25 +30,25 @@ module Seko
 
           expect(sales_order_line_item_v4.to_json_body).to eq(
             {
-              "LineNumber"            => 1,
-              "Quantity"              => 50,
-              "ASNNumber"             => "TestASNNumber",
-              "Channel"               => "TestChannel",
-              "CountryCode"           => "TestCountryCode",
-              "CurrencyCode"          => "TestCurrencyCode",
-              "CustomsValue"          => 13.0,
-              "EAN"                   => "TestEAN",
-              "ExternalDocumentNo"    => "TestExternalDocumentNo",
-              "GUID"                  => "TestGUID",
-              "LotNo"                 => "TestLotNo",
-              "OrderLineMessage"      => "TestOrderLineMessage",
-              "ProductCode"           => "TestProductCode",
-              "SecondaryCurrencyCode" => "TestSecondaryCurrencyCode",
-              "SecondaryUnitPrice"    => 11.0,
-              "SecondaryVAT"          => 12.0,
-              "UnitDiscountPrice"     => 10.0,
-              "UnitPrice"             => 15.0,
-              "VAT"                   => 4.0
+              'LineNumber'            => 1,
+              'Quantity'              => 50,
+              'ASNNumber'             => 'TestASNNumber',
+              'Channel'               => 'TestChannel',
+              'CountryCode'           => 'TestCountryCode',
+              'CurrencyCode'          => 'TestCurrencyCode',
+              'CustomsValue'          => 13.0,
+              'EAN'                   => 'TestEAN',
+              'ExternalDocumentNo'    => 'TestExternalDocumentNo',
+              'GUID'                  => 'TestGUID',
+              'LotNo'                 => 'TestLotNo',
+              'OrderLineMessage'      => 'TestOrderLineMessage',
+              'ProductCode'           => 'TestProductCode',
+              'SecondaryCurrencyCode' => 'TestSecondaryCurrencyCode',
+              'SecondaryUnitPrice'    => 11.0,
+              'SecondaryVAT'          => 12.0,
+              'UnitDiscountPrice'     => 10.0,
+              'UnitPrice'             => 15.0,
+              'VAT'                   => 4.0
             }.to_json
           )
         end
