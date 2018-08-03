@@ -84,7 +84,7 @@ module Seko
       }
       params[:dc] = dc_code unless dc_code.nil?
 
-      HTTParty.post(
+      HTTParty.get(
         API_URL + RETRIEVE_STOCK_QUANTITY_PATH,
         headers: { 'Accept' => 'application/json' },
         query:   params

@@ -613,7 +613,7 @@ module Seko
     describe '#retrieve_stock_quantity' do
       it 'makes request to SEKO API' do
         stub_const('Seko::Client::API_URL', 'https://test.service.com:8081/api/')
-        stub_request(:post, "#{Seko::Client::API_URL}stock/v3/quantity")
+        stub_request(:get, "#{Seko::Client::API_URL}stock/v3/quantity")
           .with(
             headers: { 'Accept' => 'application/json' },
             query: {
