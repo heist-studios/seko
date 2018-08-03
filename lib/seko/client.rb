@@ -5,14 +5,16 @@ module Seko
   class Client
     API_URL = 'https://ihubuat.supplystream.com:8081/api/'.freeze
 
-    LOAD_SALES_ORDER_PATH           = 'api/salesorders/v4/submit'.freeze
     LOAD_PRODUCT_MASTER_PATH        = 'products/v4/submit'.freeze
     LOAD_PRODUCT_MASTER_UPDATE_PATH = 'products/v4/update'.freeze
+    LOAD_SALES_ORDER_PATH = 'salesorders/v4/submit'.freeze
+    LOAD_WEB_SALES_ORDER_PATH = 'salesorders/v4/websubmit'.freeze
 
     def initialize(api_key)
       @api_key = api_key
     end
 
+    # https://bigdigit.atlassian.net/wiki/spaces/IH2/pages/12386597/API+Load+Sales+Orders
     def load_sales_order(order)
       body = order.to_json_body
 

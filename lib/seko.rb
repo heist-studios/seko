@@ -28,6 +28,7 @@ require 'seko/resources/forwarding_agent'
 require 'seko/resources/sales_order_v4'
 require 'seko/resources/sales_order_header'
 require 'seko/resources/sales_order_line_item_v4'
+require 'seko/resources/sales_orders_request_list_v4'
 require 'seko/resources/ship_to_company'
 
 require 'seko/resources/product_master_update_v4'

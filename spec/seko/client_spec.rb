@@ -5,7 +5,7 @@ module Seko
   RSpec.describe Client do
     describe '#load_sales_order' do
       it 'makes request to SEKO API' do
-        stub_const('Seko::Client::API_URL', 'https://test.service.com:8081/')
+        stub_const('Seko::Client::API_URL', 'https://test.service.com:8081/api/')
         stub_request(:post, 'https://test.service.com:8081/api/salesorders/v4/submit')
           .with(
             headers: {
@@ -267,11 +267,14 @@ module Seko
           unit_price:              15,
           vat:                     4
         )
+        sales_orders_request_list_v4 = Resources::SalesOrdersRequestListV4.new(
+          sales_order_line_item: [sales_order_line_item_v4]
+        )
         order = Resources::SalesOrdersV4Request.new(
           billing_details:    billing_details,
           delivery_details:   delivery_details,
           forwarding_agent:   forwarding_agent,
-          list:               [sales_order_line_item_v4],
+          list:               sales_orders_request_list_v4,
           sales_order:        sales_order,
           sales_order_header: sales_order_header,
           ship_to_company:    ship_to_company

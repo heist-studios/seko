@@ -12,7 +12,7 @@ module Seko
           if val.respond_to?(:attributes)
             acc[transform_simple_key(key)] = transform_keys(val.attributes)
           elsif val.is_a?(Array)
-            acc['List'] = { 'SalesOrderLineItem' => val.map { |el| transform_keys(el.attributes) } }
+            acc[transform_simple_key(key)] = val.map { |el| transform_keys(el.attributes) }
           else
             acc[transform_simple_key(key)] = val
           end
