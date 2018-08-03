@@ -598,7 +598,7 @@ module Seko
           list:           product_master_parameters_list
         )
 
-        response = client.load_product_master(product_master_update_request)
+        response = client.load_product_master_update(product_master_update_request)
 
         expect(response.parsed_response).to eq({
           'CallStatus' => {
