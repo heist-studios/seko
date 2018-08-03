@@ -2,6 +2,8 @@ PATH
   remote: .
   specs:
     seko (0.1.0)
+      httparty (~> 0.16.2)
+      virtus (~> 1.0.5)
 
 GEM
   remote: https://rubygems.org/

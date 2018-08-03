@@ -112,6 +112,7 @@ module Seko
                          'NotificationMethod'          => 'TestNotificationMethod',
                          'OnHold'                      => true,
                          'OrderType'                   => 'TestOrderType',
+                         'SalesInvoiceNumber'          => 'TestSalesInvoiceNumber',
                          'SalesOrderDate'              => '2017-01-01T12:00:00.656Z',
                          'SalesOrderReference'         => 'TestSalesOrderReference',
                          'ScheduledShipDate'           => '2017-12-31T12:00:00.656Z',
@@ -125,7 +126,6 @@ module Seko
                          'SubTotal'                    => 5.0,
                          'TaxTotal'                    => 3.0,
                          'UltimateDestination'         => 'TestUltimateDestination',
-                         'SalesInvoiceNumber'          => 'TestSalesInvoiceNumber'
                        },
                        'SalesOrderHeader' => {
                          'DCCode' => 'TestDCCode'
@@ -173,6 +173,7 @@ module Seko
           notification_method:            'TestNotificationMethod',
           on_hold:                        true,
           order_type:                     'TestOrderType',
+          sales_invoice_number:           'TestSalesInvoiceNumber',
           sales_order_date:               '2017-01-01T12:00:00.656Z',
           sales_order_reference:          'TestSalesOrderReference',
           scheduled_ship_date:            '2017-12-31T12:00:00.656Z',
@@ -185,8 +186,7 @@ module Seko
           special_instructions:           'TestSpecialInstructions',
           sub_total:                      5,
           tax_total:                      3,
-          ultimate_destination:           'TestUltimateDestination',
-          sales_invoice_number:           'TestSalesInvoiceNumber'
+          ultimate_destination:           'TestUltimateDestination'
         )
         sales_order_header = Resources::SalesOrderHeader.new(dc_code: 'TestDCCode')
         ship_to_company = Resources::ShipToCompany.new(

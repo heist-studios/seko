@@ -31,6 +31,21 @@ module Seko
       )
     end
 
+    # https://bigdigit.atlassian.net/wiki/spaces/IH2/pages/12386616/API+Load+Web+Sales+Orders
+    def load_web_sales_order(order)
+      body = order.to_json_body
+
+      HTTParty.post(
+        API_URL + LOAD_WEB_SALES_ORDER_PATH,
+        headers: {
+          'Content-Type' => 'application/json',
+          'Accept'       => 'application/json'
+        },
+        query:   { api_key: api_key },
+        body:    body
+      )
+    end
+
     # https://bigdigit.atlassian.net/wiki/spaces/IH2/pages/12386494/Load+Product+Masters
     def load_product_master(product)
       body = product.to_json_body
