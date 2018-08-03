@@ -675,5 +675,38 @@ module Seko
         }.to_json)
       end
     end
+
+    describe '#load_sales_order_cancellation' do
+      it 'makes request to SEKO API' do
+        stub_const('Seko::Client::API_URL', 'https://test.service.com:8081/api/')
+        stub_request(:post, "#{Seko::Client::API_URL}salesorders/v3/SOTest234/cancel")
+          .with(
+            headers: { 'Accept' => 'application/json' },
+            query: { 'api_key' => 'ABC' }
+          ).to_return(
+            body: {
+              'CallStatus' => {
+                'Success' => true,
+                'Code'    => 0,
+                'Message' => ''
+              },
+              'GUID' => nil
+            }.to_json
+          )
+
+        order    = Resources::SalesOrderV4.new(sales_order_number: 'SOTest234')
+        client   = Client.new('ABC')
+        response = client.load_sales_order_cancellation(order)
+
+        expect(response.parsed_response).to eq({
+          'CallStatus' => {
+            'Success' => true,
+            'Code'    => 0,
+            'Message' => ''
+          },
+          'GUID' => nil
+        }.to_json)
+      end
+    end
   end
 end
