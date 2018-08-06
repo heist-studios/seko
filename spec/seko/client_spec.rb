@@ -279,7 +279,7 @@ module Seko
           sales_order_header: sales_order_header,
           ship_to_company:    ship_to_company
         )
-        client = Client.new('ABC')
+        client = Client.new(api_key: 'ABC', live: true)
         response = client.load_sales_order(order)
 
         expect(response.parsed_response).to eq({
@@ -554,7 +554,7 @@ module Seko
           sales_order_header: sales_order_header,
           web_sales_order:    web_sales_order,
         )
-        client = Client.new('ABC')
+        client = Client.new(api_key: 'ABC', live: true)
         response = client.load_web_sales_order(order)
 
         expect(response.parsed_response).to eq({
@@ -709,7 +709,7 @@ module Seko
           unit_price:               102,
           wet_bond:                 true
         )
-        client = Client.new('ABC')
+        client = Client.new(api_key: 'ABC', live: true)
         product_master_request = Resources::ProductMasterV4Request.new(
           product_master: product_master,
           list:           product_master_parameters_list
@@ -867,7 +867,7 @@ module Seko
           unit_price:               102,
           wet_bond:                 true
         )
-        client = Client.new('ABC')
+        client = Client.new(api_key: 'ABC', live: true)
         product_master_update_request = Resources::ProductMasterUpdateV4Request.new(
           product_master: product_master,
           list:           product_master_parameters_list
@@ -922,7 +922,7 @@ module Seko
             }.to_json
           )
 
-        client = Client.new('ABC')
+        client = Client.new(api_key: 'ABC', live: true)
         response = client.retrieve_stock_quantity(product_codes = ['pmtest123', 'pmtest234'], dc_code = 'DCCL01')
 
         expect(response.parsed_response).to eq({
@@ -970,7 +970,7 @@ module Seko
           )
 
         order    = Resources::SalesOrderV4.new(sales_order_number: 'SOTest234')
-        client   = Client.new('ABC')
+        client   = Client.new(api_key: 'ABC', live: true)
         response = client.load_sales_order_cancellation(order)
 
         expect(response.parsed_response).to eq({

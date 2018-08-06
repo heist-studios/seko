@@ -3,7 +3,8 @@ require 'virtus'
 
 module Seko
   class Client
-    API_URL = 'https://ihubuat.supplystream.com:8081/api/'.freeze
+    API_URL      = 'https://ihub.supplystream.com:8081/api/'.freeze
+    API_TEST_URL = 'https://ihubuat.supplystream.com:8081/api/'.freeze
 
     LOAD_PRODUCT_MASTER_PATH           = 'products/v4/submit'.freeze
     LOAD_PRODUCT_MASTER_UPDATE_PATH    = 'products/v4/update'.freeze
@@ -12,8 +13,9 @@ module Seko
     RETRIEVE_STOCK_QUANTITY_PATH       = 'stock/v3/quantity'.freeze
     LOAD_SALES_ORDER_CANCELLATION_PATH = 'salesorders/v3/[SALES_ORDER_NUMBER]/cancel'.freeze
 
-    def initialize(api_key)
+    def initialize(api_key:, live: false)
       @api_key = api_key
+      @live    = live
     end
 
     # https://bigdigit.atlassian.net/wiki/spaces/IH2/pages/12386597/API+Load+Sales+Orders
@@ -21,7 +23,7 @@ module Seko
       body = order.to_json_body
 
       HTTParty.post(
-        API_URL + LOAD_SALES_ORDER_PATH,
+        api_url + LOAD_SALES_ORDER_PATH,
         headers: {
           'Content-Type' => 'application/json',
           'Accept'       => 'application/json'
@@ -36,7 +38,7 @@ module Seko
       body = order.to_json_body
 
       HTTParty.post(
-        API_URL + LOAD_WEB_SALES_ORDER_PATH,
+        api_url + LOAD_WEB_SALES_ORDER_PATH,
         headers: {
           'Content-Type' => 'application/json',
           'Accept'       => 'application/json'
@@ -51,7 +53,7 @@ module Seko
       body = product.to_json_body
 
       HTTParty.post(
-        API_URL + LOAD_PRODUCT_MASTER_PATH,
+        api_url + LOAD_PRODUCT_MASTER_PATH,
         headers: {
           'Content-Type' => 'application/json',
           'Accept'       => 'application/json'
@@ -66,7 +68,7 @@ module Seko
       body = product.to_json_body
 
       HTTParty.post(
-        API_URL + LOAD_PRODUCT_MASTER_UPDATE_PATH,
+        api_url + LOAD_PRODUCT_MASTER_UPDATE_PATH,
         headers: {
           'Content-Type' => 'application/json',
           'Accept'       => 'application/json'
@@ -85,7 +87,7 @@ module Seko
       params[:dc] = dc_code unless dc_code.nil?
 
       HTTParty.get(
-        API_URL + RETRIEVE_STOCK_QUANTITY_PATH,
+        api_url + RETRIEVE_STOCK_QUANTITY_PATH,
         headers: { 'Accept' => 'application/json' },
         query:   params
       )
@@ -94,7 +96,7 @@ module Seko
     # https://bigdigit.atlassian.net/wiki/spaces/IH2/pages/12386570/API+Load+Sales+Order+Cancellations
     def load_sales_order_cancellation(order)
       HTTParty.post(
-        API_URL + LOAD_SALES_ORDER_CANCELLATION_PATH.gsub('[SALES_ORDER_NUMBER]', order.sales_order_number),
+        api_url + LOAD_SALES_ORDER_CANCELLATION_PATH.gsub('[SALES_ORDER_NUMBER]', order.sales_order_number),
         headers: { 'Accept' => 'application/json' },
         query:   { api_key: api_key }
       )
@@ -102,6 +104,10 @@ module Seko
 
     private
 
-    attr_reader :api_key
+    def api_url
+      live ? API_URL : API_TEST_URL
+    end
+
+    attr_reader :api_key, :live
   end
 end
