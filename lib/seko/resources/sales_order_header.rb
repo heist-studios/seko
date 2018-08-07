@@ -4,8 +4,9 @@ module Seko
       include Virtus.model
 
       # OPTIONAL ATTRIBUTES:
+
       attribute :dc_code, String
-      # validates :dc_code, length: { maximum: 100 }
+      # length: { maximum: 100 }
     end
   end
 end

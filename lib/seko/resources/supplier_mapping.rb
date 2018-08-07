@@ -4,12 +4,13 @@ module Seko
       include Virtus.model
 
       # OPTIONAL ATTRIBUTES:
+
       attribute :supplier_code,        String
 
       attribute :supplier_description, String
 
       attribute :uom,                  Integer
-      # validates :uom, numericality: { only_integer: true }
+      # numericality: { only_integer: true }
     end
   end
 end
