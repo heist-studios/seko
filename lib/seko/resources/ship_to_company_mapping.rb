@@ -1,6 +1,6 @@
 module Seko
   module Resources
-    class ShipToCompanyMapping < Base
+    class ShipToCompanyMapping
       include Virtus.model
 
       # OPTIONAL ATTRIBUTES:

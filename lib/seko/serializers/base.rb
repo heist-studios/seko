@@ -1,11 +1,17 @@
 module Seko
-  module Resources
+  module Serializers
     class Base
-      def to_json_body
-        transform_keys(attributes).to_json
+      def initialize(object)
+        @object = object
+      end
+
+      def serialize
+        transform_keys(object.attributes).to_json
       end
 
       private
+
+      attr_reader :object
 
       def transform_keys(attrs)
         attrs.inject({}) do |acc, (key, val)|

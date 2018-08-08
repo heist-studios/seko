@@ -1,6 +1,6 @@
 module Seko
   module Resources
-    class WebDeliveryDetails < Base
+    class WebDeliveryDetails
       include Virtus.model
 
       # OPTIONAL ATTRIBUTES:

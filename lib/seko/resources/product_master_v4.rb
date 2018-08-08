@@ -1,6 +1,6 @@
 module Seko
   module Resources
-    class ProductMasterV4 < Base
+    class ProductMasterV4
       include Virtus.model
 
       # REQUIRED ATTRIBUTES:

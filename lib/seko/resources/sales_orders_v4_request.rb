@@ -1,6 +1,6 @@
 module Seko
   module Resources
-    class SalesOrdersV4Request < Base
+    class SalesOrdersV4Request
       include Virtus.model
 
       # OPTIONAL ATTRIBUTES:

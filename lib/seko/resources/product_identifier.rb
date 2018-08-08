@@ -1,6 +1,6 @@
 module Seko
   module Resources
-    class ProductIdentifier < Base
+    class ProductIdentifier
       include Virtus.model
 
       # OPTIONAL ATTRIBUTES:

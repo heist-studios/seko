@@ -1,6 +1,6 @@
 module Seko
   module Resources
-    class ShipToCompany < Base
+    class ShipToCompany
       include Virtus.model
 
       # REQUIRED ATTRIBUTES:

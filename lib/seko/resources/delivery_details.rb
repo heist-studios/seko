@@ -1,6 +1,6 @@
 module Seko
   module Resources
-    class DeliveryDetails < Base
+    class DeliveryDetails
       include Virtus.model
 
       # OPTIONAL ATTRIBUTES:

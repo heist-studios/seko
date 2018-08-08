@@ -1,6 +1,6 @@
 module Seko
   module Resources
-    class Image < Base
+    class Image
       include Virtus.model
 
       # OPTIONAL ATTRIBUTES:

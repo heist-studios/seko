@@ -1,6 +1,6 @@
 module Seko
   module Resources
-    class SalesOrderHeader < Base
+    class SalesOrderHeader
       include Virtus.model
 
       # OPTIONAL ATTRIBUTES:

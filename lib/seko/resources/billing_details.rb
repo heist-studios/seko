@@ -1,6 +1,6 @@
 module Seko
   module Resources
-    class BillingDetails < Base
+    class BillingDetails
       include Virtus.model
 
       # OPTIONAL ATTRIBUTES:

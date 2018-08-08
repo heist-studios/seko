@@ -20,25 +20,25 @@ module Seko
 
     # https://bigdigit.atlassian.net/wiki/spaces/IH2/pages/12386597/API+Load+Sales+Orders
     def load_sales_order(order)
-      body = order.to_json_body
+      body = Serializers::Base.new(order).serialize
       post_request(path: LOAD_SALES_ORDER_PATH, body: body)
     end
 
     # https://bigdigit.atlassian.net/wiki/spaces/IH2/pages/12386616/API+Load+Web+Sales+Orders
     def load_web_sales_order(order)
-      body = order.to_json_body
+      body = Serializers::Base.new(order).serialize
       post_request(path: LOAD_WEB_SALES_ORDER_PATH, body: body)
     end
 
     # https://bigdigit.atlassian.net/wiki/spaces/IH2/pages/12386504/API+Load+Product+Masters
     def load_product_master(product)
-      body = product.to_json_body
+      body = Serializers::Base.new(product).serialize
       post_request(path: LOAD_PRODUCT_MASTER_PATH, body: body)
     end
 
     # https://bigdigit.atlassian.net/wiki/spaces/IH2/pages/12386517/API+Load+Product+Master+Updates
     def load_product_master_update(product)
-      body = product.to_json_body
+      body = Serializers::Base.new(product).serialize
       post_request(path: LOAD_PRODUCT_MASTER_UPDATE_PATH, body: body)
     end
 

@@ -1,6 +1,6 @@
 module Seko
   module Resources
-    class ProductCategory < Base
+    class ProductCategory
       include Virtus.model
 
       # OPTIONAL ATTRIBUTES:

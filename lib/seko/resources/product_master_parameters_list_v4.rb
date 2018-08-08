@@ -1,6 +1,6 @@
 module Seko
   module Resources
-    class ProductMasterParametersListV4 < Base
+    class ProductMasterParametersListV4
       include Virtus.model
 
       # OPTIONAL ATTRIBUTES:

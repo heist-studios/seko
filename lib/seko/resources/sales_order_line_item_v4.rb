@@ -1,6 +1,6 @@
 module Seko
   module Resources
-    class SalesOrderLineItemV4 < Base
+    class SalesOrderLineItemV4
       include Virtus.model
 
       # REQUIRED ATTRIBUTES:

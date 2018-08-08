@@ -20,7 +20,7 @@
 
 require 'seko/client'
 
-require 'seko/resources/base'
+require 'seko/serializers/base'
 
 require 'seko/resources/billing_details'
 require 'seko/resources/delivery_details'

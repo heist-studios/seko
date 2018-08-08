@@ -1,6 +1,6 @@
 module Seko
   module Resources
-    class SupplierMapping < Base
+    class SupplierMapping
       include Virtus.model
 
       # OPTIONAL ATTRIBUTES:

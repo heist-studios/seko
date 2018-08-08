@@ -1,6 +1,6 @@
 module Seko
   module Resources
-    class ForwardingAgent < Base
+    class ForwardingAgent
       include Virtus.model
 
       # OPTIONAL ATTRIBUTES:

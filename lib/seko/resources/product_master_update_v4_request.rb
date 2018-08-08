@@ -1,6 +1,6 @@
 module Seko
   module Resources
-    class ProductMasterUpdateV4Request < Base
+    class ProductMasterUpdateV4Request
       include Virtus.model
 
       # REQUIRED ATTRIBUTES:
