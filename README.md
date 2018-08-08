@@ -37,10 +37,10 @@ It's highly recommended that you don't include the api_key within your repo, but
  
 #### load_product_master
 
-For creating a product you should first build `ProductMasterV4Request` object which is consistent from those attributes:
+For creating a product you should first build `Seko::Requests::ProductMasterV4Request` object which is consistent from those attributes:
 
 * product_master [ProductMasterV4](https://github.com/heist-studios/seko/blob/master/lib/seko/resources/product_master_v4.rb)
-* list [ProductMasterParametersListV4](https://github.com/heist-studios/seko/blob/master/lib/seko/resources/product_master_parameters_list_v4.rb)
+* list [ProductMasterParametersListV4](https://github.com/heist-studios/seko/blob/master/lib/seko/lists/product_master_parameters_list_v4.rb)
   * [Image](https://github.com/heist-studios/seko/blob/master/lib/seko/resources/image.rb)
   * [SupplierMapping](https://github.com/heist-studios/seko/blob/master/lib/seko/resources/supplier_mapping.rb)
   * [ShipToCompanyMapping](https://github.com/heist-studios/seko/blob/master/lib/seko/resources/ship_to_company_mapping.rb)
@@ -52,17 +52,17 @@ Here is the minimal amount of attributes you have to pass to send correct reques
 ```ruby
 product_master = Seko::Resources::ProductMasterV4.new(product_code: 'code_123')
 
-product = Seko::Resources::ProductMasterV4Request.new(product_master: product_master)
+product = Seko::Requests::ProductMasterV4Request.new(product_master: product_master)
 
 client.load_product_master(product)
 ```
 
 #### load_product_master_update
 
-For updating a product you should first build `ProductMasterUpdateV4Request` object which is consistent from those attributes:
+For updating a product you should first build `Seko::Requests::ProductMasterUpdateV4Request` object which is consistent from those attributes:
 
 * product_master [ProductMasterUpdateV4](https://github.com/heist-studios/seko/blob/master/lib/seko/resources/product_master_update_v4.rb)
-* list [ProductMasterUpdateParametersListV4](https://github.com/heist-studios/seko/blob/master/lib/seko/resources/product_master_update_parameters_list_v4.rb)
+* list [ProductMasterUpdateParametersListV4](https://github.com/heist-studios/seko/blob/master/lib/seko/lists/product_master_update_parameters_list_v4.rb)
   * [Image](https://github.com/heist-studios/seko/blob/master/lib/seko/resources/image.rb)
   * [SupplierMapping](https://github.com/heist-studios/seko/blob/master/lib/seko/resources/supplier_mapping.rb)
   * [ShipToCompanyMapping](https://github.com/heist-studios/seko/blob/master/lib/seko/resources/ship_to_company_mapping.rb)
@@ -74,7 +74,7 @@ The minimal amount of attributes you have to pass are the same as it is in `load
 ```ruby
 product_update = Seko::Resources::ProductMasterUpdateV4.new(product_code: 'test', currency: 'PLN')
 
-product = Seko::Resources::ProductMasterUpdateV4Request.new(product_master: product_update)
+product = Seko::Requests::ProductMasterUpdateV4Request.new(product_master: product_update)
 
 client.load_product_master(product)
 ```
@@ -102,12 +102,12 @@ response = client.load_sales_order_cancellation(sales_order_number: 'SOTest234',
 
 #### load_web_sales_order
 
-For creating a web sales order you should first build `WebSalesOrdersV4Request` object which is consistent from those attributes:
+For creating a web sales order you should first build `Seko::Requests::WebSalesOrdersV4Request` object which is consistent from those attributes:
 
 * billing_details    [BillingDetails](https://github.com/heist-studios/seko/blob/master/lib/seko/resources/billing_details.rb)
 * delivery_details   [WebDeliveryDetails](https://github.com/heist-studios/seko/blob/master/lib/seko/resources/web_delivery_details.rb)
 * forwarding_agent   [ForwardingAgent](https://github.com/heist-studios/seko/blob/master/lib/seko/resources/forwarding_agent.rb)
-* list               [SalesOrdersRequestListV4](https://github.com/heist-studios/seko/blob/master/lib/seko/resources/sales_orders_request_list_v4.rb) 
+* list               [SalesOrdersRequestListV4](https://github.com/heist-studios/seko/blob/master/lib/seko/lists/sales_orders_request_list_v4.rb) 
   * [SalesOrderLineItemV4](https://github.com/heist-studios/seko/blob/master/lib/seko/resources/sales_order_line_item_v4.rb)
 * sales_order_header [SalesOrderHeader](https://github.com/heist-studios/seko/blob/master/lib/seko/resources/sales_order_header.rb)
 * web_sales_order    [WebSalesOrderV4](https://github.com/heist-studios/seko/blob/master/lib/seko/resources/web_sales_order_v4.rb)
@@ -142,9 +142,9 @@ item = Seko::Resources::SalesOrderLineItemV4.new(
   unit_price:'6.99', 
   currency_code:'GBP'
 )
-list = Seko::Resources::SalesOrdersRequestListV4.new(sales_order_line_item: [item])
+list = Seko::Lists::SalesOrdersRequestListV4.new(sales_order_line_item: [item])
 
-order = Seko::Resources::WebSalesOrdersV4Request.new(
+order = Seko::Requests::WebSalesOrdersV4Request.new(
   web_sales_order: web_sales_order, 
   delivery_details: web_delivery_details, 
   billing_details: billing_details, 

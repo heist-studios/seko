@@ -214,7 +214,7 @@ module Seko
           unit_price:              15,
           vat:                     4
         )
-        sales_orders_request_list_v4 = Resources::SalesOrdersRequestListV4.new(
+        sales_orders_request_list_v4 = Lists::SalesOrdersRequestListV4.new(
           sales_order_line_item: [sales_order_line_item_v4]
         )
         sales_order_header = Resources::SalesOrderHeader.new(dc_code: 'TestDCCode')
@@ -256,7 +256,7 @@ module Seko
           tax_total:                      3,
           ultimate_destination:           'TestUltimateDestination'
         )
-        order = Resources::WebSalesOrdersV4Request.new(
+        order = Requests::WebSalesOrdersV4Request.new(
           billing_details:    billing_details,
           delivery_details:   delivery_details,
           forwarding_agent:   forwarding_agent,

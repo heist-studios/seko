@@ -267,10 +267,10 @@ module Seko
           unit_price:              15,
           vat:                     4
         )
-        sales_orders_request_list_v4 = Resources::SalesOrdersRequestListV4.new(
+        sales_orders_request_list_v4 = Lists::SalesOrdersRequestListV4.new(
           sales_order_line_item: [sales_order_line_item_v4]
         )
-        order = Resources::SalesOrdersV4Request.new(
+        order = Requests::SalesOrdersV4Request.new(
           billing_details:    billing_details,
           delivery_details:   delivery_details,
           forwarding_agent:   forwarding_agent,

@@ -101,7 +101,7 @@ module Seko
           name:   'TestName',
           values: 'TestValues'
         )
-        product_master_parameters_list = Resources::ProductMasterUpdateParametersListV4.new(
+        product_master_parameters_list = Lists::ProductMasterUpdateParametersListV4.new(
           image:                   [image],
           supplier_mapping:        [supplier_mapping],
           ship_to_company_mapping: [ship_to_company_mapping],
@@ -144,7 +144,7 @@ module Seko
           wet_bond:                 true
         )
         client = Client.new(api_key: 'ABC', live: true)
-        product_master_update_request = Resources::ProductMasterUpdateV4Request.new(
+        product_master_update_request = Requests::ProductMasterUpdateV4Request.new(
           product_master: product_master,
           list:           product_master_parameters_list
         )
