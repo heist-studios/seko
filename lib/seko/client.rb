@@ -18,18 +18,6 @@ module Seko
       @live    = live
     end
 
-    # https://bigdigit.atlassian.net/wiki/spaces/IH2/pages/12386597/API+Load+Sales+Orders
-    def load_sales_order(order)
-      body = Serializers::Base.new(order).serialize
-      post_request(path: LOAD_SALES_ORDER_PATH, body: body)
-    end
-
-    # https://bigdigit.atlassian.net/wiki/spaces/IH2/pages/12386616/API+Load+Web+Sales+Orders
-    def load_web_sales_order(order)
-      body = Serializers::Base.new(order).serialize
-      post_request(path: LOAD_WEB_SALES_ORDER_PATH, body: body)
-    end
-
     # https://bigdigit.atlassian.net/wiki/spaces/IH2/pages/12386504/API+Load+Product+Masters
     def load_product_master(product)
       body = Serializers::Base.new(product).serialize
@@ -42,19 +30,10 @@ module Seko
       post_request(path: LOAD_PRODUCT_MASTER_UPDATE_PATH, body: body)
     end
 
-    # https://bigdigit.atlassian.net/wiki/spaces/IH2/pages/12386628/API+Retrieve+Stock+Quantity
-    def retrieve_stock_quantity(product_codes:, dc_code: nil)
-      params = {
-        api_key:      api_key,
-        productCodes: product_codes.join(',')
-      }
-      params[:dc] = dc_code unless dc_code.nil?
-
-      HTTParty.get(
-        api_url + RETRIEVE_STOCK_QUANTITY_PATH,
-        headers: { 'Accept' => 'application/json' },
-        query:   params
-      )
+    # https://bigdigit.atlassian.net/wiki/spaces/IH2/pages/12386597/API+Load+Sales+Orders
+    def load_sales_order(order)
+      body = Serializers::Base.new(order).serialize
+      post_request(path: LOAD_SALES_ORDER_PATH, body: body)
     end
 
     # https://bigdigit.atlassian.net/wiki/spaces/IH2/pages/12386570/API+Load+Sales+Order+Cancellations
@@ -64,6 +43,24 @@ module Seko
 
       HTTParty.post(
         api_url + LOAD_SALES_ORDER_CANCELLATION_PATH.gsub('[SALES_ORDER_NUMBER]', sales_order_number),
+        headers: { 'Accept' => 'application/json' },
+        query:   params
+      )
+    end
+
+    # https://bigdigit.atlassian.net/wiki/spaces/IH2/pages/12386616/API+Load+Web+Sales+Orders
+    def load_web_sales_order(order)
+      body = Serializers::Base.new(order).serialize
+      post_request(path: LOAD_WEB_SALES_ORDER_PATH, body: body)
+    end
+
+    # https://bigdigit.atlassian.net/wiki/spaces/IH2/pages/12386628/API+Retrieve+Stock+Quantity
+    def retrieve_stock_quantity(product_codes:, dc_code: nil)
+      params = { api_key: api_key, productCodes: product_codes.join(',') }
+      params[:dc] = dc_code unless dc_code.nil?
+
+      HTTParty.get(
+        api_url + RETRIEVE_STOCK_QUANTITY_PATH,
         headers: { 'Accept' => 'application/json' },
         query:   params
       )

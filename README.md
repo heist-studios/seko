@@ -17,11 +17,11 @@ And then execute:
 ## Getting Started
 
 Currently there are 5 methods that work on the instance of the `Seko::Client` class:
-* `load_web_sales_order` [link to api page](https://bigdigit.atlassian.net/wiki/spaces/IH2/pages/12386616/API+Load+Web+Sales+Orders)
 * `load_product_master` [link to api page](https://bigdigit.atlassian.net/wiki/spaces/IH2/pages/12386504/API+Load+Product+Masters)
 * `load_product_master_update` [link to api page](https://bigdigit.atlassian.net/wiki/spaces/IH2/pages/12386517/API+Load+Product+Master+Updates)
-* `retrieve_stock_quantity` [link to api page](https://bigdigit.atlassian.net/wiki/spaces/IH2/pages/12386628/API+Retrieve+Stock+Quantity)
 * `load_sales_order_cancellation` [link to api page](https://bigdigit.atlassian.net/wiki/spaces/IH2/pages/12386570/API+Load+Sales+Order+Cancellations)
+* `load_web_sales_order` [link to api page](https://bigdigit.atlassian.net/wiki/spaces/IH2/pages/12386616/API+Load+Web+Sales+Orders)
+* `retrieve_stock_quantity` [link to api page](https://bigdigit.atlassian.net/wiki/spaces/IH2/pages/12386628/API+Retrieve+Stock+Quantity)
 
 You can create `Seko::Client` instance by passing `api_key` you retrieved from SEKO and `live` parameter which indicates if you want to use test or live url:
 
@@ -34,6 +34,71 @@ client = Seko::Client.new(api_key: 'ABC', live: false)
 ```
 
 It's highly recommended that you don't include the api_key within your repo, but instead use environmental variables.
+ 
+#### load_product_master
+
+For creating a product you should first build `ProductMasterV4Request` object which is consistent from those attributes:
+
+* product_master [ProductMasterV4](https://github.com/heist-studios/seko/blob/master/lib/seko/resources/product_master_v4.rb)
+* list [ProductMasterParametersListV4](https://github.com/heist-studios/seko/blob/master/lib/seko/resources/product_master_parameters_list_v4.rb)
+  * [Image](https://github.com/heist-studios/seko/blob/master/lib/seko/resources/image.rb)
+  * [SupplierMapping](https://github.com/heist-studios/seko/blob/master/lib/seko/resources/supplier_mapping.rb)
+  * [ShipToCompanyMapping](https://github.com/heist-studios/seko/blob/master/lib/seko/resources/ship_to_company_mapping.rb)
+  * [ProductCategory](https://github.com/heist-studios/seko/blob/master/lib/seko/resources/product_category.rb)
+  * [ProductIdentifier](https://github.com/heist-studios/seko/blob/master/lib/seko/resources/product_identifier.rb)
+
+Here is the minimal amount of attributes you have to pass to send correct request:
+
+```ruby
+product_master = Seko::Resources::ProductMasterV4.new(product_code: 'code_123')
+
+product = Seko::Resources::ProductMasterV4Request.new(product_master: product_master)
+
+client.load_product_master(product)
+```
+
+#### load_product_master_update
+
+For updating a product you should first build `ProductMasterUpdateV4Request` object which is consistent from those attributes:
+
+* product_master [ProductMasterUpdateV4](https://github.com/heist-studios/seko/blob/master/lib/seko/resources/product_master_update_v4.rb)
+* list [ProductMasterUpdateParametersListV4](https://github.com/heist-studios/seko/blob/master/lib/seko/resources/product_master_update_parameters_list_v4.rb)
+  * [Image](https://github.com/heist-studios/seko/blob/master/lib/seko/resources/image.rb)
+  * [SupplierMapping](https://github.com/heist-studios/seko/blob/master/lib/seko/resources/supplier_mapping.rb)
+  * [ShipToCompanyMapping](https://github.com/heist-studios/seko/blob/master/lib/seko/resources/ship_to_company_mapping.rb)
+  * [ProductCategory](https://github.com/heist-studios/seko/blob/master/lib/seko/resources/product_category.rb)
+  * [ProductIdentifier](https://github.com/heist-studios/seko/blob/master/lib/seko/resources/product_identifier.rb)
+
+The minimal amount of attributes you have to pass are the same as it is in `load_product_master` but you have to specify one more different attribute to make an actual update, for instance:
+
+```ruby
+product_update = Seko::Resources::ProductMasterUpdateV4.new(product_code: 'test', currency: 'PLN')
+
+product = Seko::Resources::ProductMasterUpdateV4Request.new(product_master: product_update)
+
+client.load_product_master(product)
+```
+
+#### load_sales_order_cancellation
+
+The minimal amount of attributes you have to pass to cancel a sales order:
+
+```ruby
+response = client.load_sales_order_cancellation(sales_order_number: 'SOTest234')
+```
+
+you can also add `reason_code` argument and according to documentation you can pass those values:
+
+* 001 - Customer Request
+* 002 - Order Delayed
+* 003 - Duplicate
+* 004 - Item not available
+* 005 - Cannot ship to address
+* 006 - Other
+
+```ruby
+response = client.load_sales_order_cancellation(sales_order_number: 'SOTest234', reason_code: '001')
+```
 
 #### load_web_sales_order
 
@@ -88,50 +153,6 @@ order = Seko::Resources::WebSalesOrdersV4Request.new(
 
 client.load_web_sales_order(order)
 ```
- 
-#### load_product_master
-
-For creating a product you should first build `ProductMasterV4Request` object which is consistent from those attributes:
-
-* product_master [ProductMasterV4](https://github.com/heist-studios/seko/blob/master/lib/seko/resources/product_master_v4.rb)
-* list [ProductMasterParametersListV4](https://github.com/heist-studios/seko/blob/master/lib/seko/resources/product_master_parameters_list_v4.rb)
-  * [Image](https://github.com/heist-studios/seko/blob/master/lib/seko/resources/image.rb)
-  * [SupplierMapping](https://github.com/heist-studios/seko/blob/master/lib/seko/resources/supplier_mapping.rb)
-  * [ShipToCompanyMapping](https://github.com/heist-studios/seko/blob/master/lib/seko/resources/ship_to_company_mapping.rb)
-  * [ProductCategory](https://github.com/heist-studios/seko/blob/master/lib/seko/resources/product_category.rb)
-  * [ProductIdentifier](https://github.com/heist-studios/seko/blob/master/lib/seko/resources/product_identifier.rb)
-
-Here is the minimal amount of attributes you have to pass to send correct request:
-
-```ruby
-product_master = Seko::Resources::ProductMasterV4.new(product_code: 'code_123')
-
-product = Seko::Resources::ProductMasterV4Request.new(product_master: product_master)
-
-client.load_product_master(product)
-```
-
-#### load_product_master_update
-
-For updating a product you should first build `ProductMasterUpdateV4Request` object which is consistent from those attributes:
-
-* product_master [ProductMasterUpdateV4](https://github.com/heist-studios/seko/blob/master/lib/seko/resources/product_master_update_v4.rb)
-* list [ProductMasterUpdateParametersListV4](https://github.com/heist-studios/seko/blob/master/lib/seko/resources/product_master_update_parameters_list_v4.rb)
-  * [Image](https://github.com/heist-studios/seko/blob/master/lib/seko/resources/image.rb)
-  * [SupplierMapping](https://github.com/heist-studios/seko/blob/master/lib/seko/resources/supplier_mapping.rb)
-  * [ShipToCompanyMapping](https://github.com/heist-studios/seko/blob/master/lib/seko/resources/ship_to_company_mapping.rb)
-  * [ProductCategory](https://github.com/heist-studios/seko/blob/master/lib/seko/resources/product_category.rb)
-  * [ProductIdentifier](https://github.com/heist-studios/seko/blob/master/lib/seko/resources/product_identifier.rb)
-
-The minimal amount of attributes you have to pass are the same as it is in `load_product_master` but you have to specify one more different attribute to make an actual update, for instance:
-
-```ruby
-product_update = Seko::Resources::ProductMasterUpdateV4.new(product_code: 'test', currency: 'PLN')
-
-product = Seko::Resources::ProductMasterUpdateV4Request.new(product_master: product_update)
-
-client.load_product_master(product)
-```
 
 #### retrieve_stock_quantity
 
@@ -145,27 +166,6 @@ Recommended way of using this endpoint:
 ```ruby
 # NOTE: products with those product_codes have to be created first 
 client.retrieve_stock_quantity(product_codes: %w[PMTest123 PMTest234])
-```
-
-#### load_sales_order_cancellation
-
-The minimal amount of attributes you have to pass to cancel a sales order:
-
-```ruby
-response = client.load_sales_order_cancellation(sales_order_number: 'SOTest234')
-```
-
-you can also add `reason_code` argument and according to documentation you can pass those values:
-
-* 001 - Customer Request
-* 002 - Order Delayed
-* 003 - Duplicate
-* 004 - Item not available
-* 005 - Cannot ship to address
-* 006 - Other
-
-```ruby
-response = client.load_sales_order_cancellation(sales_order_number: 'SOTest234', reason_code: '001')
 ```
 
 ## License
