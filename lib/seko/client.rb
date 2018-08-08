@@ -48,7 +48,7 @@ module Seko
       )
     end
 
-    # https://bigdigit.atlassian.net/wiki/spaces/IH2/pages/12386494/Load+Product+Masters
+    # https://bigdigit.atlassian.net/wiki/spaces/IH2/pages/12386504/API+Load+Product+Masters
     def load_product_master(product)
       body = product.to_json_body
 
@@ -79,7 +79,7 @@ module Seko
     end
 
     # https://bigdigit.atlassian.net/wiki/spaces/IH2/pages/12386628/API+Retrieve+Stock+Quantity
-    def retrieve_stock_quantity(product_codes, dc_code = nil)
+    def retrieve_stock_quantity(product_codes:, dc_code: nil)
       params = {
         api_key:      api_key,
         productCodes: product_codes.join(',')
@@ -94,11 +94,14 @@ module Seko
     end
 
     # https://bigdigit.atlassian.net/wiki/spaces/IH2/pages/12386570/API+Load+Sales+Order+Cancellations
-    def load_sales_order_cancellation(order)
+    def load_sales_order_cancellation(sales_order_number:, reason_code: nil)
+      params = { api_key: api_key }
+      params[:reasonCode] = reason_code unless reason_code.nil?
+
       HTTParty.post(
-        api_url + LOAD_SALES_ORDER_CANCELLATION_PATH.gsub('[SALES_ORDER_NUMBER]', order.sales_order_number),
+        api_url + LOAD_SALES_ORDER_CANCELLATION_PATH.gsub('[SALES_ORDER_NUMBER]', sales_order_number),
         headers: { 'Accept' => 'application/json' },
-        query:   { api_key: api_key }
+        query:   params
       )
     end
 

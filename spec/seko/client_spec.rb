@@ -893,7 +893,7 @@ module Seko
             headers: { 'Accept' => 'application/json' },
             query: {
               'api_key'      => 'ABC',
-              'productCodes' => 'pmtest123,pmtest234',
+              'productCodes' => 'PMTest123,PMTest234',
               'dc'           => 'DCCL01'
             }
           ).to_return(
@@ -923,7 +923,7 @@ module Seko
           )
 
         client = Client.new(api_key: 'ABC', live: true)
-        response = client.retrieve_stock_quantity(product_codes = ['pmtest123', 'pmtest234'], dc_code = 'DCCL01')
+        response = client.retrieve_stock_quantity(product_codes: %w[PMTest123 PMTest234], dc_code: 'DCCL01')
 
         expect(response.parsed_response).to eq({
           'CallStatus' => {
@@ -957,7 +957,7 @@ module Seko
         stub_request(:post, "#{Seko::Client::API_URL}salesorders/v3/SOTest234/cancel")
           .with(
             headers: { 'Accept' => 'application/json' },
-            query: { 'api_key' => 'ABC' }
+            query: { 'api_key' => 'ABC', 'reasonCode' => '001' }
           ).to_return(
             body: {
               'CallStatus' => {
@@ -969,9 +969,8 @@ module Seko
             }.to_json
           )
 
-        order    = Resources::SalesOrderV4.new(sales_order_number: 'SOTest234')
         client   = Client.new(api_key: 'ABC', live: true)
-        response = client.load_sales_order_cancellation(order)
+        response = client.load_sales_order_cancellation(sales_order_number: 'SOTest234', reason_code: '001')
 
         expect(response.parsed_response).to eq({
           'CallStatus' => {
