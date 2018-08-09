@@ -2,7 +2,7 @@ PATH
   remote: .
   specs:
     seko (0.1.0)
-      httparty (~> 0.16.2)
+      httparty
       virtus (~> 1.0.5)
 
 GEM
