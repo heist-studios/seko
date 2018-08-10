@@ -86,6 +86,27 @@ module Seko
                              'UnitDiscountPrice'     => 10.0,
                              'UnitPrice'             => 15.0,
                              'VAT'                   => 4.0
+                           },
+                           {
+                             'LineNumber'            => 2,
+                             'Quantity'              => 1,
+                             'ASNNumber'             => 'TestASNNumber2',
+                             'Channel'               => 'TestChannel2',
+                             'CountryCode'           => 'TestCountryCode2',
+                             'CurrencyCode'          => 'TestCurrencyCode2',
+                             'CustomsValue'          => 113.0,
+                             'EAN'                   => 'TestEAN2',
+                             'ExternalDocumentNo'    => 'TestExternalDocumentNo2',
+                             'GUID'                  => 'TestGUID2',
+                             'LotNo'                 => 'TestLotNo2',
+                             'OrderLineMessage'      => 'TestOrderLineMessage2',
+                             'ProductCode'           => 'TestProductCode2',
+                             'SecondaryCurrencyCode' => 'TestSecondaryCurrencyCode2',
+                             'SecondaryUnitPrice'    => 111.0,
+                             'SecondaryVAT'          => 112.0,
+                             'UnitDiscountPrice'     => 110.0,
+                             'UnitPrice'             => 115.0,
+                             'VAT'                   => 104.0
                            }
                          ]
                        },
@@ -214,8 +235,29 @@ module Seko
           unit_price:              15,
           vat:                     4
         )
+        sales_order_line_item_v4_2 = Resources::SalesOrderLineItemV4.new(
+          line_number:             2,
+          quantity:                1,
+          asn_number:              'TestASNNumber2',
+          channel:                 'TestChannel2',
+          country_code:            'TestCountryCode2',
+          currency_code:           'TestCurrencyCode2',
+          customs_value:           113,
+          ean:                     'TestEAN2',
+          external_document_no:    'TestExternalDocumentNo2',
+          guid:                    'TestGUID2',
+          lot_no:                  'TestLotNo2',
+          order_line_message:      'TestOrderLineMessage2',
+          product_code:            'TestProductCode2',
+          secondary_currency_code: 'TestSecondaryCurrencyCode2',
+          secondary_unit_price:    111,
+          secondary_vat:           112,
+          unit_discount_price:     110,
+          unit_price:              115,
+          vat:                     104
+        )
         sales_orders_request_list_v4 = Lists::SalesOrdersRequestListV4.new(
-          sales_order_line_item: [sales_order_line_item_v4]
+          sales_order_line_item: [sales_order_line_item_v4, sales_order_line_item_v4_2]
         )
         sales_order_header = Resources::SalesOrderHeader.new(dc_code: 'TestDCCode')
         web_sales_order = Resources::WebSalesOrderV4.new(
