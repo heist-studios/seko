@@ -97,19 +97,23 @@ module Seko
     end
 
     def log_product_errors(method_name, response, product)
-      unless JSON.parse(response)['CallStatus']['Success']
+      unless parsed_call_status(response, 'Success')
         product_code = product.product_master.product_code
-        message = JSON.parse(response)['CallStatus']['Message']
+        message = parsed_call_status(response, 'Message')
         logger.error("SEKO GEM: #{method_name} ERROR for product_code: '#{product_code}'. Message: '#{message}'")
       end
     end
 
     def log_web_sales_order_errors(method_name, response, order)
-      unless JSON.parse(response)['CallStatus']['Success']
+      unless parsed_call_status(response, 'Success')
         sales_order_number = order.web_sales_order.sales_order_number
-        message = JSON.parse(response)['CallStatus']['Message']
+        message = parsed_call_status(response, 'Message')
         logger.error("SEKO GEM: #{method_name} ERROR for sales_order_number: '#{sales_order_number}'. Message: '#{message}'")
       end
+    end
+
+    def parsed_call_status(response, key)
+      JSON.parse(response.body)['CallStatus'][key]
     end
 
     def logger
