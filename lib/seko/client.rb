@@ -117,7 +117,11 @@ module Seko
     end
 
     def logger
-      Logger.new(STDOUT)
+      @logger ||= if defined? Rails
+                    Rails.logger
+                  else
+                    Logger.new(STDOUT)
+                  end
     end
   end
 end
