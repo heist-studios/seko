@@ -1,5 +1,6 @@
 require 'httparty'
 require 'virtus'
+require 'logger'
 
 module Seko
   class Client
@@ -21,13 +22,19 @@ module Seko
     # https://bigdigit.atlassian.net/wiki/spaces/IH2/pages/12386504/API+Load+Product+Masters
     def load_product_master(product)
       body = Serializers::Base.new(product).serialize
-      post_request(path: LOAD_PRODUCT_MASTER_PATH, body: body)
+      response = post_request(path: LOAD_PRODUCT_MASTER_PATH, body: body)
+
+      log_product_errors(:load_product_master, response, product)
+      response
     end
 
     # https://bigdigit.atlassian.net/wiki/spaces/IH2/pages/12386517/API+Load+Product+Master+Updates
     def load_product_master_update(product)
       body = Serializers::Base.new(product).serialize
-      post_request(path: LOAD_PRODUCT_MASTER_UPDATE_PATH, body: body)
+      response = post_request(path: LOAD_PRODUCT_MASTER_UPDATE_PATH, body: body)
+
+      log_product_errors(:load_product_master_update, response, product)
+      response
     end
 
     # https://bigdigit.atlassian.net/wiki/spaces/IH2/pages/12386597/API+Load+Sales+Orders
@@ -51,7 +58,10 @@ module Seko
     # https://bigdigit.atlassian.net/wiki/spaces/IH2/pages/12386616/API+Load+Web+Sales+Orders
     def load_web_sales_order(order)
       body = Serializers::Base.new(order).serialize
-      post_request(path: LOAD_WEB_SALES_ORDER_PATH, body: body)
+      response = post_request(path: LOAD_WEB_SALES_ORDER_PATH, body: body)
+
+      log_web_sales_order_errors(:load_web_sales_order, response, order)
+      response
     end
 
     # https://bigdigit.atlassian.net/wiki/spaces/IH2/pages/12386628/API+Retrieve+Stock+Quantity
@@ -84,6 +94,26 @@ module Seko
         query:   { api_key: api_key },
         body:    body
       )
+    end
+
+    def log_product_errors(method_name, response, product)
+      unless JSON.parse(response)['CallStatus']['Success']
+        product_code = product.product_master.product_code
+        message = JSON.parse(response)['CallStatus']['Message']
+        logger.error("SEKO GEM: #{method_name} ERROR for product_code: '#{product_code}'. Message: '#{message}'")
+      end
+    end
+
+    def log_web_sales_order_errors(method_name, response, order)
+      unless JSON.parse(response)['CallStatus']['Success']
+        sales_order_number = order.web_sales_order.sales_order_number
+        message = JSON.parse(response)['CallStatus']['Message']
+        logger.error("SEKO GEM: #{method_name} ERROR for sales_order_number: '#{sales_order_number}'. Message: '#{message}'")
+      end
+    end
+
+    def logger
+      Logger.new(STDOUT)
     end
   end
 end

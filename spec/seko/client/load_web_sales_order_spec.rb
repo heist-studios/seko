@@ -318,6 +318,58 @@ module Seko
           'GUID' => '3b4b1773-30f1-40f6-aaae-ea675ded52e4'
         }.to_json)
       end
+
+      it 'makes request to SEKO API' do
+        stub_const('Seko::Client::API_URL', 'https://test.service.com:8081/api/')
+        stub_request(:post, 'https://test.service.com:8081/api/salesorders/v4/websubmit')
+          .with(
+            headers: {
+              'Content-Type' => 'application/json',
+              'Accept'       => 'application/json'
+            },
+            query:   { 'api_key' => 'ABC' },
+            body:    {
+                       'WebSalesOrder' => {
+                         'SalesOrderNumber' => 'TestSalesOrderNumber',
+                       },
+                     }.to_json
+          )
+          .to_return(
+            body: {
+                    'CallStatus' => {
+                      'Success' => false,
+                      'Code'    => 100,
+                      'Message' => 'The City field is required.; The CountryCode field is required.; ' \
+                                   'The Line1 field is required.'
+                    },
+                  }.to_json
+          )
+
+
+        web_sales_order = Resources::WebSalesOrderV4.new(sales_order_number: 'TestSalesOrderNumber')
+        order = Requests::WebSalesOrdersV4Request.new(web_sales_order: web_sales_order)
+        client = Client.new(api_key: 'ABC', live: true)
+
+        logger = Logger.new(STDOUT)
+        allow(Logger).to receive(:new).and_return(logger)
+        allow(logger).to receive(:error)
+
+        response = client.load_web_sales_order(order)
+
+        expect(response.parsed_response).to eq({
+          'CallStatus' => {
+            'Success' => false,
+            'Code'    => 100,
+            'Message' => 'The City field is required.; The CountryCode field is required.; ' \
+                         'The Line1 field is required.'
+          },
+        }.to_json)
+
+        expect(logger).to have_received(:error)
+          .with("SEKO GEM: load_web_sales_order ERROR for sales_order_number: 'TestSalesOrderNumber'. " \
+                "Message: 'The City field is required.; The CountryCode field is required.; " \
+                "The Line1 field is required.'")
+      end
     end
   end
 end

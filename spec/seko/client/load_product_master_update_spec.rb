@@ -159,6 +159,54 @@ module Seko
           }
         }.to_json)
       end
+
+      it 'makes request to SEKO API and log errors if response returns an error' do
+        stub_const('Seko::Client::API_URL', 'https://test.service.com:8081/api/')
+        stub_request(:post, "#{Seko::Client::API_URL}products/v4/update")
+          .with(
+            headers: {
+              'Content-Type' => 'application/json',
+              'Accept'       => 'application/json'
+            },
+            query:   { 'api_key' => 'ABC' },
+            body:    {
+                       'ProductMaster' => {
+                         'ProductCode' => 'TestProductCode',
+                         'Currency'    => 'error'
+                       }
+                     }.to_json
+          ).to_return(
+          body: {
+                  'CallStatus' => {
+                    'Success' => false,
+                    'Code'    => 100,
+                    'Message' => 'The field Currency must be a string with a maximum length of 3.'
+                  }
+                }.to_json
+        )
+
+        client  = Client.new(api_key: 'ABC', live: true)
+        product_master = Resources::ProductMasterUpdateV4.new(product_code: 'TestProductCode', currency: 'error')
+        product_master_update_request = Requests::ProductMasterUpdateV4Request.new(product_master: product_master)
+
+        logger = Logger.new(STDOUT)
+        allow(Logger).to receive(:new).and_return(logger)
+        allow(logger).to receive(:error)
+
+        response = client.load_product_master_update(product_master_update_request)
+
+        expect(response.parsed_response).to eq({
+          'CallStatus' => {
+            'Success' => false,
+            'Code'    => 100,
+            'Message' => 'The field Currency must be a string with a maximum length of 3.'
+          }
+        }.to_json)
+
+        expect(logger).to have_received(:error)
+          .with("SEKO GEM: load_product_master_update ERROR for product_code: 'TestProductCode'. " \
+                "Message: 'The field Currency must be a string with a maximum length of 3.'")
+      end
     end
   end
 end
