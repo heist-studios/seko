@@ -59,6 +59,9 @@ module Seko
     def load_web_sales_order(order)
       body = Serializers::Base.new(order).serialize
       response = post_request(path: LOAD_WEB_SALES_ORDER_PATH, body: body)
+      3.times { puts "="*100}
+      puts response
+      3.times { puts "*"*100}
 
       log_web_sales_order_errors(:load_web_sales_order, response, order)
       response
